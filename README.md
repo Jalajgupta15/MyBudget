@@ -1,6 +1,3 @@
-Here's a simple `README.md` for your project:
-
----
 
 # Budget Controller
 
@@ -30,7 +27,3 @@ This project is a budget controller web application built as a practice for Java
 ## Live Demo
 
 Check out the live demo [here](https://jalajgupta15.github.io/MyBudget/).
-
----
-
-Feel free to update the live demo link with your actual site link!
