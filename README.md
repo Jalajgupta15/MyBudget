@@ -29,7 +29,7 @@ This project is a budget controller web application built as a practice for Java
 
 ## Live Demo
 
-Check out the live demo [here]().
+Check out the live demo [here](https://jalajgupta15.github.io/MyBudget/).
 
 ---
 
