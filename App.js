@@ -1,62 +1,32 @@
-const financeManager = require('./FinanceController');
-const UIController = require('./UIController');
+document.querySelector('.add__btn').addEventListener('click', function () {
+    const type = document.querySelector('.add__type').value; // + or -
+    const description = document.querySelector('.add__description').value;
+    const value = parseFloat(document.querySelector('.add__value').value);
 
-// MAIN APPLICATION CONTROLLER
-var appController = (function(financeCtrl, UICtrl) {
+    if (description !== "" && !isNaN(value) && value > 0) {
+        addItem(type, description, value);
+        clearFields();
+    }
+});
 
-    var setupEventListeners = function() {
-        var DOM = UICtrl.getDOMstrings();
+function addItem(type, description, value) {
+    const container = type === 'inc' ? '.income__list' : '.expenses__list';
+    const html = `
+        <div class="item clearfix">
+            <div class="item__description">${description}</div>
+            <div class="right clearfix">
+                <div class="item__value">${type === 'inc' ? '+' : '-'} ${value.toFixed(2)}</div>
+                <div class="item__delete">
+                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.querySelector(container).insertAdjacentHTML('beforeend', html);
+}
 
-        document.querySelector(DOM.inputBtn).addEventListener('click', addItem);
-
-        document.addEventListener('keypress', function(event) {
-            if (event.keyCode === 13 || event.which === 13) {
-                addItem();
-            }
-        });
-
-        document.querySelector(DOM.container).addEventListener('click', deleteItem);
-    };
-
-    var updateBudget = function() {
-        financeCtrl.calculateBudget();
-        UICtrl.displayBudget(financeCtrl.getBudgetDetails());
-    };
-
-    var addItem = function() {
-        var input = UICtrl.getInput();
-
-        if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
-            var newItem = financeCtrl.addRecord(input.type, input.description, input.value);
-            UICtrl.addListItem(newItem, input.type);
-            UICtrl.clearFields();
-            updateBudget();
-        }
-    };
-
-    var deleteItem = function(event) {
-        var itemID = event.target.closest('.item').id;
-
-        if (itemID) {
-            var splitID = itemID.split('-');
-            var type = splitID[0];
-            var ID = parseInt(splitID[1]);
-
-            financeCtrl.removeRecord(type, ID);
-            UICtrl.deleteListItem(itemID);
-            updateBudget();
-        }
-    };
-
-    return {
-        init: function() {
-            console.log('My Budget application has started.');
-            UICtrl.displayMonth();
-            UICtrl.displayBudget({ budget: 0, totalIncome: 0, totalExpenses: 0, percentage: -1 });
-            setupEventListeners();
-        }
-    };
-
-})(financeManager, UIController);
-
-appController.init();
+function clearFields() {
+    document.querySelector('.add__description').value = '';
+    document.querySelector('.add__value').value = '';
+    document.querySelector('.add__description').focus();
+}
