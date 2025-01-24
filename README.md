@@ -1,5 +1,5 @@
 
-# Budget Controller
+# My Budget 
 
 This project is a budget controller web application built as a practice for JavaScript. It features a user interface for tracking income and expenses, calculating available budget, and displaying real-time financial information.
 
